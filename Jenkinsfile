@@ -14,21 +14,6 @@ pipeline {
 
   stages {
     
-    stage('generateTag') {
-      agent any
-      when {
-        branch 'develop'
-      }
-      steps {
-        script {
-          def BUILD = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-          env.VERSION = "${VER}-${BUILD}"
-          env.TAG ="${PRODUCT}:$VERSION"
-          currentBuild.displayName = "$VERSION"
-        }
-      }
-    }
-
     stage('buildImage') {
       agent any
       when {
@@ -36,6 +21,9 @@ pipeline {
       }
       steps {
           checkout scm
+          def BUILD = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+          env.VERSION = "${VER}-${BUILD}"
+          env.TAG ="${PRODUCT}:$VERSION"
           sh 'docker build -t "$TAG" .'
       }
     }
@@ -49,6 +37,17 @@ pipeline {
       }
       steps {
           sh 'python /app/tests/unitTest.py'
+      }
+    }
+
+    stage('Deploy-Dev') {
+      agent any
+      when {
+        branch 'develop'
+      }
+      steps {
+          sh 'docker rm -f `docker ps -f name=service-monitor-dev -q`'
+          sh 'docker run --name service-monitor-dev -d -p 8000:8000 $TAG'
       }
     }
   }
