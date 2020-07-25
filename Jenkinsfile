@@ -44,7 +44,9 @@ pipeline {
     }
 
     stage('Deploy-Dev') {
-      agent any
+      agent{
+        label 'local-machine'
+      } 
       when {
         branch 'develop'
       }
