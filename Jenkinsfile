@@ -41,7 +41,7 @@ pipeline {
         branch 'develop'
       }
       steps {
-          sh 'docker run -ti $TAG python /app/tests/unitTest.py'
+          sh 'docker run $TAG python /app/tests/unitTest.py'
       }
     }
 
