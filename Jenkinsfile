@@ -15,7 +15,9 @@ pipeline {
   stages {
     
     stage('buildImage') {
-      agent any
+      agent{
+        label 'dev-server'
+      }
       when {
         branch 'develop'
       }
@@ -43,24 +45,15 @@ pipeline {
       }
     }
 
-    stage('Dev-Clenup') {
-      agent{
-        docker '$TAG'
-      }
-      when {
-        branch 'develop'
-      }
-      steps {
-        sh 'docker rm -f $(docker ps -f name=service-monitor-dev -q)'
-      }
-    }
-
     stage('Deploy-Dev') {
-      agent any
+      agent{
+        label 'dev-server'
+      }
       when {
         branch 'develop'
       }
       steps {
+          sh 'docker rm -f $(docker ps -f name=service-monitor-dev -q)'
           sh 'docker run --name service-monitor-dev -d -p 8000:8000 $TAG'
       }
     }
