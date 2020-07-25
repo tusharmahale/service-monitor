@@ -25,6 +25,7 @@ pipeline {
             def BUILD_HASH = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
             env.VERSION = "${VER}-${BUILD_HASH}"
             env.TAG ="${PRODUCT}:$VERSION"
+            currentBuild.displayName = "$VERSION"
           }
           sh 'docker build -t "$TAG" .'
       }
@@ -48,7 +49,7 @@ pipeline {
         branch 'develop'
       }
       steps {
-          sh 'docker rm -f `docker ps -f name=service-monitor-dev -q`'
+          sh 'docker rm -f $(docker ps -f name=service-monitor-dev -q)'
           sh 'docker run --name service-monitor-dev -d -p 8000:8000 $TAG'
       }
     }
