@@ -4,6 +4,7 @@ pipeline {
 
   options {
     disableConcurrentBuilds()
+    skipDefaultCheckout()
   }
 
   environment {
@@ -13,18 +14,6 @@ pipeline {
 
   stages {
     
-    stage('init') {
-      agent any
-      when {
-        branch 'develop'
-      }
-      steps {
-        script {
-          checkout scm
-        }
-      }
-    }
- 
     stage('generateTag') {
       agent any
       when {
@@ -46,7 +35,8 @@ pipeline {
         branch 'develop'
       }
       steps {
-          sh 'docker build -t "$TAG" -f Dockerfile'
+          checkout scm
+          sh 'docker build -t "$TAG" .'
       }
     }
 
