@@ -1,0 +1,35 @@
+<!doctype html>
+<table border="1">
+<tr>
+  <th style="text-align:center">Website</th>
+  <th style="text-align:center">URL</th>
+  <th colspan="7" style="text-align:center">HTTP Codes</th>
+  </tr>
+  <tr>
+  <th style="text-align:center"></th>
+  <th style="text-align:center"></th>
+  <th style="text-align:center">NOW</th>
+  <th style="text-align:center">Before 10m</th>
+  <th style="text-align:center">Before 20m</th>
+  <th style="text-align:center">Before 30m</th>
+  <th style="text-align:center">Before 40m</th>
+  <th style="text-align:center">Before 50m</th>
+  <th style="text-align:center">Before 60m</th>
+  </tr>
+</tr>
+{% for webName in g.url_stats %}
+{% for url in g.url_stats[webName] %}
+<tr>
+  <td style="text-align:center">{{ webName }}</td>
+  <td style="text-align:center">{{ url }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][0] }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][1] }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][2] }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][3] }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][4] }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][5] }}</td>
+  <td style="text-align:center">{{ g.url_stats[webName][url][6] }}</td>
+</tr>
+{% endfor %}
+{% endfor %}
+</table>
