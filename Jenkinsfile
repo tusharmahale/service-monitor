@@ -35,13 +35,13 @@ pipeline {
 
     stage('unitTest') {
       agent{
-        docker '$TAG'
+        label 'dev-server'
       }
       when {
         branch 'develop'
       }
       steps {
-          sh 'python /app/tests/unitTest.py'
+          sh 'docker run -ti $TAG python /app/tests/unitTest.py'
       }
     }
 
