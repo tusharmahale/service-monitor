@@ -2,9 +2,6 @@ pipeline {
   options {
     disableConcurrentBuilds()
   }
-  agent {
-    label 'docker'
-  }
 
   environment {
     PRODUCT = "service-monitor"
