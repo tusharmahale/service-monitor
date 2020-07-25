@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 import unittest
+import sys
+sys.path.insert(1, '/app/src')
 import app
+
 
 class TestService(unittest.TestCase):
   def setUp(self):
