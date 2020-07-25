@@ -43,15 +43,24 @@ pipeline {
       }
     }
 
-    stage('Deploy-Dev') {
+    stage('Dev-Clenup') {
       agent{
-        label 'local-machine'
-      } 
+        docker '$TAG'
+      }
       when {
         branch 'develop'
       }
       steps {
-          sh 'docker rm -f $(docker ps -f name=service-monitor-dev -q)'
+        sh 'docker rm -f $(docker ps -f name=service-monitor-dev -q)'
+      }
+    }
+
+    stage('Deploy-Dev') {
+      agent any
+      when {
+        branch 'develop'
+      }
+      steps {
           sh 'docker run --name service-monitor-dev -d -p 8000:8000 $TAG'
       }
     }
