@@ -11,6 +11,7 @@ pipeline {
   stages {
     
     stage('init') {
+      agent any
       when {
         branch 'develop'
       }
@@ -22,6 +23,7 @@ pipeline {
     }
  
     stage('generateTag') {
+      agent any
       when {
         branch 'develop'
       }
@@ -36,6 +38,7 @@ pipeline {
     }
 
     stage('buildImage') {
+      agent any
       when {
         branch 'develop'
       }
@@ -45,17 +48,14 @@ pipeline {
     }
 
     stage('unitTest') {
+      agent{
+        docker '$TAG'
+      }
       when {
         branch 'develop'
       }
       steps {
-        script{
-          appContainer = docker.image("$TAG")
-          appContainer.pull()
-          appContainer.inside(){
-            sh 'python /app/tests/unitTest.py'
-          }
-        }
+          sh 'python /app/tests/unitTest.py'
       }
     }
   }
