@@ -21,8 +21,8 @@ pipeline {
       }
       steps {
           checkout scm
-          def BUILD = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-          env.VERSION = "${VER}-${BUILD}"
+          env.BUILD_HASH = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+          env.VERSION = "${VER}-${BUILD_HASH}"
           env.TAG ="${PRODUCT}:$VERSION"
           sh 'docker build -t "$TAG" .'
       }
