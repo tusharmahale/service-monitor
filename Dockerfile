@@ -7,7 +7,6 @@ COPY requirements.txt ./
 
 RUN pip install -r requirements.txt
 
-COPY templates /app/src/templates
 COPY tests /app/tests
 COPY src /app/src
 COPY input.csv ./

@@ -35,7 +35,7 @@ docker run --name service-monitor-dev -d -p 8000:8000 --restart="always" service
 
 ### CI/CD
 
-CI/CD is set up with Jenkins. You can refer to [Jenkinsfile](Jenkinsfile) inside repo
+CI/CD is set up with Jenkins. You can refer to [Jenkinsfile](Jenkinsfile) inside repo.
 Jenkins CI/CD consists of below stages automatically provided dependent stages are successful
   - Build code
   - Run Unit tests
