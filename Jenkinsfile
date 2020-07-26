@@ -53,7 +53,7 @@ pipeline {
         branch 'develop'
       }
       steps {
-          sh 'docker rm -f $(docker ps -f name=service-monitor-dev -q) 2> /dev/null || true'
+          sh 'docker rm -f $(docker ps -a -f name=service-monitor-dev -q) 2> /dev/null || true'
           sh 'docker run --name service-monitor-dev -d -p 8000:8000 $TAG'
       }
     }
