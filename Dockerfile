@@ -11,6 +11,6 @@ COPY templates /app/src/templates
 COPY tests /app/tests
 COPY src /app/src
 COPY input.csv ./
-RUN chmod 755 /app/src/*py /app/tests/*py
+RUN chmod 755 /app/src/*py /app/tests/*py /app/tests/*sh
 
 CMD ["python", "app.py"]

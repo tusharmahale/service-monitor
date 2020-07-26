@@ -57,5 +57,17 @@ pipeline {
           sh 'docker run --name service-monitor-dev -d -p 8000:8000 $TAG'
       }
     }
+
+    stage('Smoke-Test') {
+      agent{
+        docker 'dwdraju/alpine-curl-jq:latest'
+      }
+      when {
+        branch 'develop'
+      }
+      steps {
+          sh './tests/smoke-test-dev.py'
+      }
+    }
   }
 }
