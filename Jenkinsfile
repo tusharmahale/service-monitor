@@ -66,7 +66,8 @@ pipeline {
         branch 'develop'
       }
       steps {
-          sh './tests/smoke-test-dev.py'
+          checkout scm
+          sh './tests/smoke-test-dev.sh'
       }
     }
   }
